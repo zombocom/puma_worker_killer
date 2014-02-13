@@ -1,6 +1,3 @@
-require 'get_process_mem'
-require 'puma/cluster'
-
 module PumaWorkerKiller
   class Reaper
     def initialize(max_ram, master = self.get_master)
