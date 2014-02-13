@@ -32,6 +32,7 @@ module PumaWorkerKiller
       return false unless @master
       workers      = get_workers
       total_memory = get_total_memory(workers)
+      @master.log "Puma consuming #{total_memory} mb with master and #{workers.count} workers"
       if workers.any? && total_memory > @max_ram
         biggest_worker, memory_used = workers.sort_by {|_, mem| mem }.last
         biggest_worker.term
