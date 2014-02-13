@@ -37,7 +37,7 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
     reaper.reap
     assert_equal 0, cluster.workers.select {|w| w.is_term? }.count
     ENV['CAUSE_MEMORY_LEAK'] = "true"
-    sleep 2
+    sleep 5
 
     reaper.reap
     assert_equal 1, cluster.workers.select {|w| w.is_term? }.count
