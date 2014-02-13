@@ -26,7 +26,7 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
 
   def test_kills_memory_leak
     before = ENV['CAUSE_MEMORY_LEAK']
-    ram     = 50 #mb
+    ram     = 75 #mb
     cluster = FakeCluster.new
     reaper  = PumaWorkerKiller::Reaper.new(ram, cluster)
     worker_count = 20

@@ -51,7 +51,7 @@ class FakeCluster
   def do_work
     while true
       SecureRandom.hex(16).to_sym if ENV['CAUSE_MEMORY_LEAK']
-      sleep 0.001
+      sleep 0.0001
     end
   end
 
