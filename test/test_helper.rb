@@ -39,7 +39,8 @@ class FakeCluster
         end
 
         Process.kill "TERM", @pid
-      rescue Errno::ESRCH
+        Process.wait(@pid)
+      rescue Errno::ESRCH, Errno::ECHILD
       end
     end
   end

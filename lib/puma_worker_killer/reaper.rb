@@ -25,6 +25,11 @@ module PumaWorkerKiller
       worker_memory + master_memory
     end
 
+    def wait(pid)
+      Process.wait(pid)
+    rescue Errno::ECHILD
+    end
+
     def reap
       return false unless @master
       workers      = get_workers
@@ -34,7 +39,7 @@ module PumaWorkerKiller
         biggest_worker, memory_used = workers.sort_by {|_, mem| mem }.last
         biggest_worker.term
         @master.log "PumaWorkerKiller: Out of memory. #{workers.count} workers consuming total: #{total_memory} mb out of max: #{@max_ram} mb. Sending TERM to #{biggest_worker.inspect} consuming #{memory_used} mb."
-        Process.wait(biggest_worker.pid)
+        wait(biggest_worker.pid)
       end
     end
   end
