@@ -4,8 +4,6 @@ require 'puma_worker_killer'
 require 'test/unit'
 
 
-require 'securerandom'
-
 # Mock object stand in for Puma::Cluster
 class FakeCluster
   def initialize
@@ -51,8 +49,7 @@ class FakeCluster
 
   def do_work
     while true
-      SecureRandom.hex(16).to_sym if ENV['CAUSE_MEMORY_LEAK']
-      sleep 0.0001
+      sleep 1
     end
   end
 

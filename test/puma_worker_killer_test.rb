@@ -25,29 +25,23 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
   end
 
   def test_kills_memory_leak
-    before = ENV['CAUSE_MEMORY_LEAK']
     ram     = 75 #mb
     cluster = FakeCluster.new
     reaper  = PumaWorkerKiller::Reaper.new(ram, cluster)
-    worker_count = 0
-    while reaper.get_total_memory < ram * 0.80
+    while reaper.get_total_memory < (ram * 0.80)
       cluster.add_worker
-      worker_count += 1
     end
-    assert_equal worker_count, cluster.workers.count
 
     reaper.reap
     assert_equal 0, cluster.workers.select {|w| w.is_term? }.count
-    ENV['CAUSE_MEMORY_LEAK'] = "true"
 
     while reaper.get_total_memory < ram
-      sleep 1
+      cluster.add_worker
     end
 
     reaper.reap
     assert_equal 1, cluster.workers.select {|w| w.is_term? }.count
   ensure
-    ENV['CAUSE_MEMORY_LEAK'] = before
     cluster.workers.map(&:term)
   end
 
