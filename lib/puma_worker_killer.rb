@@ -21,6 +21,7 @@ module PumaWorkerKiller
   end
 end
 
+require 'puma_worker_killer/puma_memory'
 require 'puma_worker_killer/reaper'
 require 'puma_worker_killer/auto_reap'
 require 'puma_worker_killer/version'

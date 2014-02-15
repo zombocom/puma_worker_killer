@@ -1,28 +1,8 @@
 module PumaWorkerKiller
   class Reaper
     def initialize(max_ram, master = self.get_master)
+      @puma    = PumaWorkerKiller::PumaMemory.new(master)
       @max_ram = max_ram
-      @master  = master
-    end
-
-    def get_master
-      ObjectSpace.each_object(Puma::Cluster).map { |obj| obj }.first if defined?(Puma::Cluster)
-    end
-
-    def get_memory(pid)
-      GetProcessMem.new(pid).mb
-    end
-
-    def get_workers
-      workers = {}
-      @master.instance_variable_get("@workers").each { |worker| workers[worker] = get_memory(worker.pid) }
-      workers
-    end
-
-    def get_total_memory(workers = self.get_workers)
-      master_memory = get_memory(Process.pid)
-      worker_memory = workers.map {|_, mem| mem }.inject(&:+) || 0
-      worker_memory + master_memory
     end
 
     def wait(pid)
@@ -30,17 +10,19 @@ module PumaWorkerKiller
     rescue Errno::ECHILD
     end
 
+    # used for tes
+    def get_total_memory
+      @puma.get_total_memory
+    end
+
     def reap
-      return false unless @master
-      workers      = get_workers
-      total_memory = get_total_memory(workers)
-      if workers.any? && total_memory > @max_ram
-        biggest_worker, memory_used = workers.sort_by {|_, mem| mem }.last
-        biggest_worker.term
-        @master.log "PumaWorkerKiller: Out of memory. #{workers.count} workers consuming total: #{total_memory} mb out of max: #{@max_ram} mb. Sending TERM to #{biggest_worker.inspect} consuming #{memory_used} mb."
-        wait(biggest_worker.pid)
+      return false unless @puma.running?
+      if (total = get_total_memory) > @max_ram
+        @puma.master.log "PumaWorkerKiller: Out of memory. #{@puma.workers.count} workers consuming total: #{total} mb out of max: #{@max_ram} mb. Sending TERM to #{@puma.largest_worker.inspect} consuming #{@puma.largest_worker_memory} mb."
+        @puma.largest_worker.term
+        wait(@puma.largest_worker.pid)
       else
-        @master.log "PumaWorkerKiller: Consuming #{total_memory} mb with master and #{workers.count} workers"
+        @puma.master.log "PumaWorkerKiller: Consuming #{total} mb with master and #{@puma.workers.count} workers"
       end
     end
   end
