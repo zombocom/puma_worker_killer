@@ -58,7 +58,12 @@ You may want to tune the worker killer to run more or less often. You can adjust
 PumaWorkerKiller.frequency = 20 # seconds
 ```
 
+
 ## License
 
 MIT
 
+
+## Feedback
+
+Open up an issue or ping me on twitter [@schneems](http://twitter.com/schneems).
