@@ -6,7 +6,7 @@ module PumaWorkerKiller
     end
 
     def get_master
-      ObjectSpace.each_object(Puma::Cluster).map { |obj| obj }.first
+      ObjectSpace.each_object(Puma::Cluster).map { |obj| obj }.first if defined?(Puma::Cluster)
     end
 
     def get_memory(pid)
