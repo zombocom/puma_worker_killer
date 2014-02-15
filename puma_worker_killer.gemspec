@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = PumaWorkerKiller::VERSION
   gem.authors       = ["Richard Schneeman"]
   gem.email         = ["richard.schneeman+rubygems@gmail.com"]
-  gem.description   = %q{ }
-  gem.summary       = %q{ }
+  gem.description   = %q{ Kills pumas, the code kind }
+  gem.summary       = %q{ If you have a memory leak in your web code puma_worker_killer can keep it in check. }
   gem.homepage      = "https://github.com/schneems/puma_worker_killer"
   gem.license       = "MIT"
 
