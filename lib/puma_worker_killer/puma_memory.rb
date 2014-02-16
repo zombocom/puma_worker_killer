@@ -8,6 +8,12 @@ module PumaWorkerKiller
       @master
     end
 
+    def term_largest_worker
+      largest_worker.term
+      Process.wait(largest_worker.pid)
+    rescue Errno::ECHILD
+    end
+
     def running?
       @master && workers.any?
     end
