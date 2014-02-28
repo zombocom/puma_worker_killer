@@ -1,11 +1,15 @@
 module PumaWorkerKiller
   class PumaMemory
-    def initialize(master = self.get_master)
-      @master  = master
+    def initialize(master = nil)
+      @master  = master || get_master
     end
 
     def master
       @master
+    end
+
+    def size
+      workers.size
     end
 
     def term_largest_worker
@@ -18,13 +22,23 @@ module PumaWorkerKiller
       @master && workers.any?
     end
 
+    def smallest_worker
+      smallest, _ = workers.to_a.first
+      smallest
+    end
+
+    def smallest_worker_memory
+      _, smallest_mem = workers.to_a.first
+      smallest_mem
+    end
+
     def largest_worker
-      largest_worker, _ = workers.last
+      largest_worker, _ = workers.to_a.last
       largest_worker
     end
 
     def largest_worker_memory
-      _, largest_memory_used = workers.last
+      _, largest_memory_used = workers.to_a.last
       largest_memory_used
     end
 
@@ -37,7 +51,7 @@ module PumaWorkerKiller
     alias :get_total_memory :get_total
 
     def workers
-      @workers ||= set_workers
+      @workers || set_workers
     end
 
     private
@@ -53,7 +67,11 @@ module PumaWorkerKiller
       @master.instance_variable_get("@workers").each do |worker|
         workers[worker] = GetProcessMem.new(worker.pid).mb
       end
-      @workers = workers.sort_by {|_, mem| mem }
+      if workers.any?
+        @workers = Hash[ workers.sort_by {|_, mem| mem } ]
+      else
+        {}
+      end
     end
   end
 end

@@ -10,6 +10,9 @@ class FakeCluster
     @workers = []
   end
 
+  def wakeup!
+  end
+
   class Worker
     attr_accessor :pid
 
