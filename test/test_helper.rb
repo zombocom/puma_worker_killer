@@ -3,6 +3,9 @@ Bundler.require
 require 'puma_worker_killer'
 require 'test/unit'
 
+def fixture_path
+  Pathname.new(File.expand_path("../fixtures", __FILE__))
+end
 
 # Mock object stand in for Puma::Cluster
 class FakeCluster
