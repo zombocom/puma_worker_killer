@@ -14,8 +14,8 @@ module PumaWorkerKiller
 
     def term_largest_worker
       largest_worker.term
-      Process.wait(largest_worker.pid)
-    rescue Errno::ECHILD
+    #   Process.wait(largest_worker.pid)
+    # rescue Errno::ECHILD
     end
 
     def running?
