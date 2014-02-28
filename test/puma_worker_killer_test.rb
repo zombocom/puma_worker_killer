@@ -37,18 +37,20 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
   end
 
   def test_kills_memory_leak
-    ram     = rand(50..75) #mb
+    ram     = rand(75..100) #mb
     cluster = FakeCluster.new
     reaper  = PumaWorkerKiller::Reaper.new(ram, cluster)
     while reaper.get_total_memory < (ram * 0.80)
       cluster.add_worker
+      sleep 0.01
     end
 
     reaper.reap
     assert_equal 0, cluster.workers.select {|w| w.is_term? }.count
 
-    while reaper.get_total_memory < ram
+    until reaper.get_total_memory > ram
       cluster.add_worker
+      sleep 0.01
     end
 
     reaper.reap
