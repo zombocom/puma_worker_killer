@@ -5,7 +5,9 @@
 
 ## What
 
-If you have a memory leak in your code, finding and plugging it can be a herculean effort. Instead what if you just killed your processes when they got to be too large? The Puma Worker Killer does just that. Similar to [Unicorn Worker Killer](https://github.com/kzk/unicorn-worker-killer) but for the Puma web server. Note that Puma can uses threads or processes to add concurrency, the Puma Worker Killer only helps if you are using clustered mode (concurrency via process).
+If you have a memory leak in your code, finding and plugging it can be a herculean effort. Instead what if you just killed your processes when they got to be too large? The Puma Worker Killer does just that. Similar to [Unicorn Worker Killer](https://github.com/kzk/unicorn-worker-killer) but for the Puma web server.
+
+Puma worker killer can only function if you have enabled cluster mode or hybrid mode (threads + worker cluster). If you are only using threads (and not workers) then puma worker killer cannot help keep your memory in control.
 
 
 ## Install
