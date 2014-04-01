@@ -44,7 +44,7 @@ module PumaWorkerKiller
 
     # Will refresh @workers
     def get_total(workers = set_workers)
-      master_memory = GetProcessMem.new(Process.pid).mb
+      master_memory = get_memory(Process.pid)
       worker_memory = workers.map {|_, mem| mem }.inject(&:+) || 0
       worker_memory + master_memory
     end
@@ -56,6 +56,13 @@ module PumaWorkerKiller
 
     private
 
+    # Returns memory for pid in mb
+    def get_memory(pid)
+      mem = GetProcessMem.new(pid)
+      mem.mem_type = 'pss' if mem.linux?
+      mem.mb
+    end
+
     def get_master
       ObjectSpace.each_object(Puma::Cluster).map { |obj| obj }.first if defined?(Puma::Cluster)
     end
@@ -65,7 +72,7 @@ module PumaWorkerKiller
     def set_workers
       workers = {}
       @master.instance_variable_get("@workers").each do |worker|
-        workers[worker] = GetProcessMem.new(worker.pid).mb
+        workers[worker] = get_memory(worker.pid)
       end
       if workers.any?
         @workers = Hash[ workers.sort_by {|_, mem| mem } ]
