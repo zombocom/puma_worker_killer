@@ -22,6 +22,8 @@ Then run `$ bundle install`
 
 ## Use
 
+> If you like `puma_worker_killer` consider using [puma_auto_tune instead](https://github.com/schneems/puma_auto_tune). It handles memory leaks and tunes your workers too!
+
 Somewhere in your main process run this code:
 
 ```ruby
