@@ -19,6 +19,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency "puma",              "~>  2.7"
-  gem.add_dependency "get_process_mem",   "~>  0.1"
+  gem.add_dependency "get_process_mem",   "~>  0.2"
   gem.add_development_dependency "rake",  "~> 10.1"
 end
