@@ -30,6 +30,7 @@ Then run `$ bundle install`
 Somewhere in your main process run this code:
 
 ```ruby
+# config/initializers/puma_worker_killer.rb
 PumaWorkerKiller.start
 ```
 
