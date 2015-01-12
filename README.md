@@ -66,6 +66,9 @@ You may want to tune the worker killer to run more or less often. You can adjust
 PumaWorkerKiller.frequency = 20 # seconds
 ```
 
+## Heroku
+
+This gem does not behave as intended on Heroku or other platforms that run workers inside a container. This is because accurate memory usage is not available from inside a container. See https://github.com/schneems/get_process_mem/issues/7.
 
 ## License
 
