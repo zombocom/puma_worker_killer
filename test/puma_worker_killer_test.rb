@@ -5,12 +5,12 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
   def test_starts
     app_path = fixture_path.join("app.ru")
     port     = 0 # http://stackoverflow.com/questions/200484/how-do-you-find-a-free-tcp-server-port-using-ruby
-    puma_log = Pathname.new "puma.log"
-    `rm #{puma_log}; touch #{puma_log}`
-    pid  = Process.spawn("PUMA_FREQUENCY=1 bundle exec puma #{app_path} -t 1:1 -w 5 --preload --debug -p #{port} > #{puma_log}")
+    puma_log = Pathname.new "#{ SecureRandom.hex }-puma.log"
+    pid  = Process.spawn("PUMA_FREQUENCY=1 bundle exec puma #{ app_path } -t 1:1 -w 5 --preload --debug -p #{ port } > #{puma_log}")
     sleep 5
     assert_match "PumaWorkerKiller:", puma_log.read
   ensure
+    puma_log.delete
     Process.kill('TERM', pid) if pid
   end
 
@@ -59,4 +59,19 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
     cluster.workers.map(&:term)
   end
 
+
+  def test_rolling_restart
+    ram     = rand(75..100) #mb
+    cluster = FakeCluster.new
+    cluster.add_worker
+
+    worker = cluster.workers.first
+    reaper = PumaWorkerKiller::RollingRestart.new(cluster)
+    reaper.reap(1)
+
+    assert_equal 1, cluster.workers.select {|w| w.is_term? }.count
+  ensure
+    cluster.workers.map(&:term)
+  end
 end
+
