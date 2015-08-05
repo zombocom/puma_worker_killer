@@ -9,12 +9,12 @@ module PumaWorkerKiller
       @cluster.get_total_memory
     end
 
-    def reap(wait_till_next = 60)
+    def reap(wait_between_worker_kill = 60) # seconds
       return false unless @cluster.running?
-      @cluster.workers.sort.shuffle.each do |worker, ram|
+      @cluster.workers.each do |worker, ram|
         @cluster.master.log "PumaWorkerKiller: Rolling Restart. #{@cluster.workers.count} workers consuming total: #{ get_total_memory } mb out of max: #{@max_ram} mb. Sending TERM to #{worker.inspect}"
         worker.term
-        sleep wait_till_next
+        sleep wait_between_worker_kill
       end
     end
   end
