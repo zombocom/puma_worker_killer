@@ -10,6 +10,8 @@ end
 PumaWorkerKiller.start
 
 
+puts "Frequency: #{PumaWorkerKiller.frequency}" if ENV['PUMA_FREQUENCY']
+
 class HelloWorld
   def response
     [200, {}, ['Hello World']]

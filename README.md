@@ -9,6 +9,8 @@ If you have a memory leak in your code, finding and plugging it can be a hercule
 
 Puma worker killer can only function if you have enabled cluster mode or hybrid mode (threads + worker cluster). If you are only using threads (and not workers) then puma worker killer cannot help keep your memory in control.
 
+BTW restarting your processes to controll memory is like putting a bandaid on a gunshot wound, try figuring out the reason you're seeing so much memory bloat [derailed benchmarks](https://github.com/schneems/derailed_benchmarks) can help.
+
 
 ## Install
 
@@ -45,7 +47,9 @@ PumaWorkerKiller.config do |config|
   config.ram           = 1024 # mb
   config.frequency     = 5    # seconds
   config.percent_usage = 0.98
+  config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
 end
+PumaWorkerKiller.start
 ```
 
 It is important that you tell your code how much RAM is available on your system. The default is 512 mb (the same size as a Heroku 1x dyno). You can change this value like this:
@@ -66,9 +70,29 @@ You may want to tune the worker killer to run more or less often. You can adjust
 PumaWorkerKiller.frequency = 20 # seconds
 ```
 
-## Heroku
+You may want to periodically restart all of your workers rather than simply killing your largest. To do that set:
 
-This gem does not behave as intended on Heroku or other platforms that run workers inside a container. This is because accurate memory usage is not available from inside a container. See https://github.com/schneems/get_process_mem/issues/7.
+```ruby
+PumaWorkerKiller.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
+```
+
+By default PumaWorkerKiller will perform a rolling restart of all your worker processes every 12 hours. To disable, set to `false`.
+
+## Only turn on Rolling Restarts
+
+If you're running on a platform like [Heroku where it is difficult to measure RAM from inside of a container accurately](https://github.com/schneems/get_process_mem/issues/7), you may want to disable the "worker killer" functionality and only use the rolling restart. You can do that by running:
+
+```ruby
+PumaWorkerKiller.enable_rolling_restart
+```
+
+or you can pass in the restart frequency
+
+```ruby
+PumaWorkerKiller.enable_rolling_restart(12 * 3600) # 12 hours in seconds
+```
+
+Make sure if you do this to not accidentally call `PumaWorkerKiller.start` as well.
 
 ## License
 
