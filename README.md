@@ -52,6 +52,21 @@ end
 PumaWorkerKiller.start
 ```
 
+## Attention 
+If you start puma as daemon, to adddd puma worker killer config into puma config file, rather than into initializers:
+Sample like this: (in puma.rb file)
+```ruby
+before_fork do
+  PumaWorkerKiller.config do |config|
+    config.ram           = 1024 # mb
+    config.frequency     = 5    # seconds
+    config.percent_usage = 0.98
+    config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
+  end
+  PumaWorkerKiller.start
+end
+```
+
 It is important that you tell your code how much RAM is available on your system. The default is 512 mb (the same size as a Heroku 1x dyno). You can change this value like this:
 
 ```ruby
