@@ -53,7 +53,7 @@ PumaWorkerKiller.start
 ```
 
 ## Attention 
-If you start puma as daemon, to adddd puma worker killer config into puma config file, rather than into initializers:
+If you start puma as a daemon, to add puma worker killer config into puma config file, rather than into initializers:    
 Sample like this: (in puma.rb file)
 ```ruby
 before_fork do
