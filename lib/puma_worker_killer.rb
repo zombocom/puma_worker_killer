@@ -7,7 +7,7 @@ module PumaWorkerKiller
   self.ram           = 512  # mb
   self.frequency     = 10   # seconds
   self.percent_usage = 0.99 # percent of RAM to use
-  self.rolling_restart_frequency = 6 * 3600
+  self.rolling_restart_frequency = 6 * 3600 # 6 hours in seconds
 
   def config
     yield self
