@@ -9,7 +9,7 @@ If you have a memory leak in your code, finding and plugging it can be a hercule
 
 Puma worker killer can only function if you have enabled cluster mode or hybrid mode (threads + worker cluster). If you are only using threads (and not workers) then puma worker killer cannot help keep your memory in control.
 
-BTW restarting your processes to controll memory is like putting a bandaid on a gunshot wound, try figuring out the reason you're seeing so much memory bloat [derailed benchmarks](https://github.com/schneems/derailed_benchmarks) can help.
+BTW restarting your processes to control memory is like putting a bandaid on a gunshot wound, try figuring out the reason you're seeing so much memory bloat [derailed benchmarks](https://github.com/schneems/derailed_benchmarks) can help.
 
 
 ## Install
@@ -52,7 +52,7 @@ end
 PumaWorkerKiller.start
 ```
 
-## Attention 
+## Attention
 If you start puma as a daemon, to add puma worker killer config into puma config file, rather than into initializers:    
 Sample like this: (in puma.rb file)
 ```ruby
@@ -98,7 +98,7 @@ By default PumaWorkerKiller will perform a rolling restart of all your worker pr
 If you're running on a platform like [Heroku where it is difficult to measure RAM from inside of a container accurately](https://github.com/schneems/get_process_mem/issues/7), you may want to disable the "worker killer" functionality and only use the rolling restart. You can do that by running:
 
 ```ruby
-PumaWorkerKiller.enable_rolling_restart
+PumaWorkerKiller.enable_rolling_restart # Default is every 6 hours
 ```
 
 or you can pass in the restart frequency
