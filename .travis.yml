@@ -6,9 +6,9 @@ rvm:
   - 2.2.4
   - 2.3.0
   - ruby-head
-  - rbx-19mode
+  - rbx
 
 matrix:
   allow_failures:
     - rvm: ruby-head
-    - rvm: rbx-19mode
+    - rvm: rbx
