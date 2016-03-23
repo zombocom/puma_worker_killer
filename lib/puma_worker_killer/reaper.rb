@@ -13,10 +13,10 @@ module PumaWorkerKiller
     def reap
       return false unless @cluster.running?
       if (total = get_total_memory) > @max_ram
-        @cluster.master.log "PumaWorkerKiller: Out of memory. #{@cluster.workers.count} workers consuming total: #{total} mb out of max: #{@max_ram} mb. Sending TERM to #{@cluster.largest_worker.inspect} consuming #{@cluster.largest_worker_memory} mb."
+        @cluster.master.log "PumaWorkerKiller: Out of memory. #{@cluster.workers.count} workers consuming total: #{total} mb out of max: #{@max_ram} mb. Sending TERM to pid #{@cluster.largest_worker.pid} consuming #{@cluster.largest_worker_memory} mb."
         @cluster.term_largest_worker
       else
-        @cluster.master.log "PumaWorkerKiller: Consuming #{total} mb with master and #{@cluster.workers.count} workers"
+        @cluster.master.log "PumaWorkerKiller: Consuming #{total} mb with master and #{@cluster.workers.count} workers."
       end
     end
   end
