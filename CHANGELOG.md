@@ -1,3 +1,7 @@
+## 0.0.6
+
+- Log PID of worker insead of inspecting the worker #33
+
 ## 0.0.5
 
 - Support for Puma 3.x
