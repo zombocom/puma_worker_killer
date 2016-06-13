@@ -18,6 +18,10 @@ module PumaWorkerKiller
     # rescue Errno::ECHILD
     end
 
+    def workers_stopped?
+      !running?
+    end
+
     def running?
       @master && workers.any?
     end

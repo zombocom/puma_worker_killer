@@ -29,14 +29,67 @@ Then run `$ bundle install`
 
 -->
 
-Somewhere in your main process run this code:
+## Turn on Rolling Restarts
+
+A rolling restart will kill each of your workers on a rolling basis. You set the frequency which it conducts the restart. This is a simple way to keep memory down as Ruby web programs generally increase memory usage over time. This is the recommended feature to use if you're using Heroku [where it is difficult to measure RAM from inside of a container accurately](https://github.com/schneems/get_process_mem/issues/7). You can enable roling restarts by running:
 
 ```ruby
-# config/initializers/puma_worker_killer.rb
-PumaWorkerKiller.start
+before_fork do
+  require 'puma_worker_killer'
+
+  PumaWorkerKiller.enable_rolling_restart # Default is every 6 hours
+end
+
+```
+
+or you can pass in the restart frequency:
+
+```ruby
+PumaWorkerKiller.enable_rolling_restart(12 * 3600) # 12 hours in seconds
+```
+
+Make sure if you do this to not accidentally call `PumaWorkerKiller.start` as well.
+
+## Enable Worker Killing
+
+If you're not running on a containerized platform you can try to detect the amount of memory you're using and only kill Puma workers when you're over that limit. It may allow you to go for longer periods of time without killing a worker however it is more error prone than rolling restarts. To enable measurement based worker killing put this in your `puma/config.rb`:
+
+```ruby
+# config/puma.rb.rb
+
+before_fork do
+  require 'puma_worker_killer'
+
+  PumaWorkerKiller.start
+end
 ```
 
 That's it. Now on a regular basis the size of all Puma and all of it's forked processes will be evaluated and if they're over the RAM threshold will be killed. Don't worry Puma will notice a process is missing a spawn a fresh copy with a much smaller RAM footprint ASAP.
+
+## Troubleshooting
+
+When you boot your program locally you should see debug output:
+
+```
+[77773] Puma starting in cluster mode...
+[77773] * Version 3.1.0 (ruby 2.3.1-p112), codename: El Niño Winter Wonderland
+[77773] * Min threads: 0, max threads: 16
+[77773] * Environment: development
+[77773] * Process workers: 2
+[77773] * Phased restart available
+[77773] * Listening on tcp://0.0.0.0:9292
+[77773] Use Ctrl-C to stop
+[77773] PumaWorkerKiller: Consuming 54.34765625 mb with master and 2 workers.
+```
+
+If you don't see any `PumaWorkerKiller` output, make sure that you are running with multiple workers. PWK only functions if you have workers enabled, you should see something like this when Puma boots:
+
+```
+[77773] * Process workers: 2
+```
+
+If you've configured PWK's frequency try reducing it to a very low value
+
 
 ## Configure
 
@@ -53,8 +106,10 @@ PumaWorkerKiller.start
 ```
 
 ## Attention
-If you start puma as a daemon, to add puma worker killer config into puma config file, rather than into initializers:    
-Sample like this: (in puma.rb file)
+
+If you start puma as a daemon, to add puma worker killer config into puma config file, rather than into initializers:
+Sample like this: (in `config/puma.rb` file):
+
 ```ruby
 before_fork do
   PumaWorkerKiller.config do |config|
@@ -93,26 +148,9 @@ PumaWorkerKiller.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
 
 By default PumaWorkerKiller will perform a rolling restart of all your worker processes every 12 hours. To disable, set to `false`.
 
-## Only turn on Rolling Restarts
-
-If you're running on a platform like [Heroku where it is difficult to measure RAM from inside of a container accurately](https://github.com/schneems/get_process_mem/issues/7), you may want to disable the "worker killer" functionality and only use the rolling restart. You can do that by running:
-
-```ruby
-PumaWorkerKiller.enable_rolling_restart # Default is every 6 hours
-```
-
-or you can pass in the restart frequency
-
-```ruby
-PumaWorkerKiller.enable_rolling_restart(12 * 3600) # 12 hours in seconds
-```
-
-Make sure if you do this to not accidentally call `PumaWorkerKiller.start` as well.
-
 ## License
 
 MIT
-
 
 ## Feedback
 
