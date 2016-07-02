@@ -52,10 +52,10 @@ Make sure if you do this to not accidentally call `PumaWorkerKiller.start` as we
 
 ## Enable Worker Killing
 
-If you're not running on a containerized platform you can try to detect the amount of memory you're using and only kill Puma workers when you're over that limit. It may allow you to go for longer periods of time without killing a worker however it is more error prone than rolling restarts. To enable measurement based worker killing put this in your `puma/config.rb`:
+If you're not running on a containerized platform you can try to detect the amount of memory you're using and only kill Puma workers when you're over that limit. It may allow you to go for longer periods of time without killing a worker however it is more error prone than rolling restarts. To enable measurement based worker killing put this in your `config/puma.rb`:
 
 ```ruby
-# config/puma.rb.rb
+# config/puma.rb
 
 before_fork do
   require 'puma_worker_killer'
