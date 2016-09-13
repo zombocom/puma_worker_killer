@@ -1,8 +1,9 @@
 module PumaWorkerKiller
   class Reaper
-    def initialize(max_ram, master = nil)
+    def initialize(max_ram, master = nil, reaper_status_logs = true)
       @cluster = PumaWorkerKiller::PumaMemory.new(master)
       @max_ram = max_ram
+      @reaper_status_logs = reaper_status_logs
     end
 
     # used for tes
@@ -15,7 +16,7 @@ module PumaWorkerKiller
       if (total = get_total_memory) > @max_ram
         @cluster.master.log "PumaWorkerKiller: Out of memory. #{@cluster.workers.count} workers consuming total: #{total} mb out of max: #{@max_ram} mb. Sending TERM to pid #{@cluster.largest_worker.pid} consuming #{@cluster.largest_worker_memory} mb."
         @cluster.term_largest_worker
-      else
+      elsif @reaper_status_logs
         @cluster.master.log "PumaWorkerKiller: Consuming #{total} mb with master and #{@cluster.workers.count} workers."
       end
     end
