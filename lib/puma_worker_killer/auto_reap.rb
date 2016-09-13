@@ -11,8 +11,8 @@ module PumaWorkerKiller
 
       Thread.new do
         while @running
-          @reaper.reap
           sleep @timeout
+          @reaper.reap
         end
       end
     end
