@@ -43,7 +43,7 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
     port     = 0
     command  = "bundle exec puma #{ file } -t 1:1 -w 2 --preload --debug -p #{ port }"
     puts command.inspect
-    options  = { wait_for: "booted", timeout: 10, env: { } }
+    options  = { wait_for: "booted", timeout: 15, env: { } }
 
     WaitForIt.new(command, options) do |spawn|
       assert_contains(spawn, "Rolling Restart")
