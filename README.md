@@ -101,6 +101,8 @@ PumaWorkerKiller.config do |config|
   config.frequency     = 5    # seconds
   config.percent_usage = 0.98
   config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
+  config.reaper_status_logs = true # setting this to false will not log lines like:
+  # PumaWorkerKiller: Consuming 54.34765625 mb with master and 2 workers.
 end
 PumaWorkerKiller.start
 ```
@@ -147,6 +149,14 @@ PumaWorkerKiller.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
 ```
 
 By default PumaWorkerKiller will perform a rolling restart of all your worker processes every 12 hours. To disable, set to `false`.
+
+You may want to hide the following log lines: `PumaWorkerKiller: Consuming 54.34765625 mb with master and 2 workers.`. To do that set:
+
+```ruby
+PumaWorkerKiller.reaper_status_logs = false
+```
+
+Note: It is `true` by default.
 
 ## License
 
