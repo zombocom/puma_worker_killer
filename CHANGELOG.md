@@ -1,3 +1,7 @@
+## 0.0.7
+
+- Logging is configurable #41
+
 ## 0.0.6
 
 - Log PID of worker insead of inspecting the worker #33
