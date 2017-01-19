@@ -34,6 +34,8 @@ Then run `$ bundle install`
 A rolling restart will kill each of your workers on a rolling basis. You set the frequency which it conducts the restart. This is a simple way to keep memory down as Ruby web programs generally increase memory usage over time. If you're using Heroku [it is difficult to measure RAM from inside of a container accurately](https://github.com/schneems/get_process_mem/issues/7), so it is recommended to use this feature or use a [log-drain-based worker killer](https://github.com/arches/whacamole). You can enable roling restarts by running:
 
 ```ruby
+# config/puma.rb
+
 before_fork do
   require 'puma_worker_killer'
 
