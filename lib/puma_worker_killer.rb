@@ -9,7 +9,7 @@ module PumaWorkerKiller
   self.percent_usage = 0.99 # percent of RAM to use
   self.rolling_restart_frequency = 6 * 3600 # 6 hours in seconds
   self.reaper_status_logs = true
-  self.pre_term = ->(_) {} # nop
+  self.pre_term = lambda { |_| } # nop
 
   def config
     yield self
