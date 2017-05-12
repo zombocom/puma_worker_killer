@@ -1,4 +1,6 @@
 language: ruby
+sudo: false
+cache: bundler
 rvm:
   - 1.9.3
   - 2.0.0
@@ -9,6 +11,9 @@ rvm:
   - rbx
 before_install:
   - gem install bundler -v 1.12.5
+
+before_install:
+  - gem update bundler
 
 matrix:
   allow_failures:
