@@ -12,6 +12,10 @@ module PumaWorkerKiller
       workers.size
     end
 
+    def term_worker(worker)
+      worker.term
+    end
+
     def term_largest_worker
       largest_worker.term
     #   Process.wait(largest_worker.pid)

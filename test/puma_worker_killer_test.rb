@@ -33,6 +33,18 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
     end
   end
 
+  def test_pre_term
+    file     = fixture_path.join("pre_term.ru")
+    port     = 0
+    command  = "bundle exec puma #{ file } -t 1:1 -w 2 --preload --debug -p #{ port }"
+    options  = { wait_for: "booted", timeout: 5, env: { "PUMA_FREQUENCY" => 1, 'PUMA_RAM' => 1} }
+
+    WaitForIt.new(command, options) do |spawn|
+      assert_contains(spawn, "Out of memory")
+      assert_contains(spawn, "About to terminate worker:") # defined in pre_term.ru
+    end
+  end
+
   def assert_contains(spawn, string)
     assert spawn.wait(string), "Expected logs to contain '#{string}' but it did not, contents: #{ spawn.log.read }"
   end
@@ -50,4 +62,3 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
     end
   end
 end
-

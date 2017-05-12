@@ -105,9 +105,15 @@ PumaWorkerKiller.config do |config|
   config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
   config.reaper_status_logs = true # setting this to false will not log lines like:
   # PumaWorkerKiller: Consuming 54.34765625 mb with master and 2 workers.
+  
+  config.pre_term = -> (worker) {} #nop
 end
 PumaWorkerKiller.start
 ```
+
+### pre_term
+
+`config.pre_term` will be called just prior to worker termination with the worker that is about to be terminated. This may be useful to use in keeping track of metrics, time of day workers are restarted, etc.
 
 ## Attention
 
