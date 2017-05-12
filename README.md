@@ -105,8 +105,8 @@ PumaWorkerKiller.config do |config|
   config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
   config.reaper_status_logs = true # setting this to false will not log lines like:
   # PumaWorkerKiller: Consuming 54.34765625 mb with master and 2 workers.
-  
-  config.pre_term = -> (worker) {} #nop
+
+  config.pre_term = -> (worker) { puts "Worker #{worker.inspect} being killed" }
 end
 PumaWorkerKiller.start
 ```
@@ -114,6 +114,20 @@ PumaWorkerKiller.start
 ### pre_term
 
 `config.pre_term` will be called just prior to worker termination with the worker that is about to be terminated. This may be useful to use in keeping track of metrics, time of day workers are restarted, etc.
+
+By default Puma Worker Killer will emit a log when a worker is being killed
+
+```
+PumaWorkerKiller: Out of memory. 5 workers consuming total: 500 mb out of max: 450 mb. Sending TERM to pid 23 consuming 53 mb.
+```
+
+or
+
+```
+PumaWorkerKiller: Rolling Restart. 5 workers consuming total: 650mb mb. Sending TERM to pid 34.
+```
+
+However you may want to collect more data, such as sending an event to an error collection service like rollbar or airbrake. The `pre_term` lambda gets called before any worker is killed by PWK for any reason.
 
 ## Attention
 
