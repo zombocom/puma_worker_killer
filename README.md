@@ -129,6 +129,12 @@ PumaWorkerKiller: Rolling Restart. 5 workers consuming total: 650mb mb. Sending 
 
 However you may want to collect more data, such as sending an event to an error collection service like rollbar or airbrake. The `pre_term` lambda gets called before any worker is killed by PWK for any reason.
 
+### on_calculation
+
+`config.on_calculation` will be called every time Puma Worker Killer calculates memory usage (`config.frequency`). This may be useful for monitoring your total puma application memory usage, which can be contrasted with other application monitoring solutions.
+
+This callback lambda is given a single value for the amount of memory used.
+
 ## Attention
 
 If you start puma as a daemon, to add puma worker killer config into puma config file, rather than into initializers:
