@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Heroku log-runtime-metrics is supported.
+
 ## 0.1.0
 
 - Emit extra data via `pre_term` callback before puma worker killer terminates a worker #49.
