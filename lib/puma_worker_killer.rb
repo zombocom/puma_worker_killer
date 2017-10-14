@@ -3,13 +3,15 @@ require 'get_process_mem'
 module PumaWorkerKiller
   extend self
 
-  attr_accessor :ram, :frequency, :percent_usage, :rolling_restart_frequency, :reaper_status_logs, :pre_term
+  attr_accessor :ram, :frequency, :percent_usage, :rolling_restart_frequency, :reaper_status_logs, :pre_term, :heroku_api_token, :heroku_app_name
   self.ram           = 512  # mb
   self.frequency     = 10   # seconds
   self.percent_usage = 0.99 # percent of RAM to use
   self.rolling_restart_frequency = 6 * 3600 # 6 hours in seconds
   self.reaper_status_logs = true
   self.pre_term = lambda { |_| } # nop
+  self.heroku_api_token = nil
+  self.heroku_app_name = nil
 
   def config
     yield self
@@ -34,4 +36,6 @@ require 'puma_worker_killer/puma_memory'
 require 'puma_worker_killer/reaper'
 require 'puma_worker_killer/rolling_restart'
 require 'puma_worker_killer/auto_reap'
+require 'puma_worker_killer/heroku_wrapper'
+require 'puma_worker_killer/stream'
 require 'puma_worker_killer/version'

@@ -52,9 +52,15 @@ module PumaWorkerKiller
 
     # Will refresh @workers
     def get_total(workers = set_workers)
-      master_memory = GetProcessMem.new(Process.pid).mb
-      worker_memory = workers.map {|_, mem| mem }.inject(&:+) || 0
-      worker_memory + master_memory
+      if PumaWorkerKiller.heroku_api_token
+        heroku = HerokuWrapper.new(PumaWorkerKiller.heroku_app_name, PumaWorkerKiller.heroku_api_token)
+        stream_url = heroku.create_log_session
+        Stream.new(stream_url).watch
+      else
+        master_memory = GetProcessMem.new(Process.pid).mb
+        worker_memory = workers.map {|_, mem| mem }.inject(&:+) || 0
+        worker_memory + master_memory
+      end
     end
     alias :get_total_memory :get_total
 
