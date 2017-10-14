@@ -29,9 +29,35 @@ Then run `$ bundle install`
 
 -->
 
+## Now supports Heroku log-runtime-metrics
+This gem can now get memory usage from your Heroku logs.
+
+First, enable log-runtime-metrics on your heroku app:
+
+```bash
+$ heroku labs:enable log-runtime-metrics --app YOUR_APP_NAME
+```
+Next, get your app's Heroku auth token:
+
+```bash
+$ heroku auth:token
+```
+
+Then, set these variables in your Heroku config.
+
+```bash
+$ heroku config:set API_TOKEN_HEROKU='the-token-you-just-got' APP_NAME_HEROKU='name-of-your-app'
+```
+
+If you set these variables in your development environment as well, you will see memory usage from the production app in your development logs.
+
+Please note that occasionally the HTTP request for Heroku logs won't return lines with memory information. In these instances, you will see reaper status log entries like: `PumaWorkerKiller: Consuming 0.0 mb with master and 3 workers.` It is normal to see this occasionally. If every reaper status log entry looks like that, though, your app is not correctly receiving logs.
+
+**Finish with the [configuration](#configure) options below.**
+
 ## Turn on Rolling Restarts
 
-A rolling restart will kill each of your workers on a rolling basis. You set the frequency which it conducts the restart. This is a simple way to keep memory down as Ruby web programs generally increase memory usage over time. If you're using Heroku [it is difficult to measure RAM from inside of a container accurately](https://github.com/schneems/get_process_mem/issues/7), so it is recommended to use this feature or use a [log-drain-based worker killer](https://github.com/arches/whacamole). You can enable roling restarts by running:
+A rolling restart will kill each of your workers on a rolling basis. You set the frequency which it conducts the restart. This is a simple way to keep memory down as Ruby web programs generally increase memory usage over time. If you're using Heroku [it is difficult to measure RAM from inside of a container accurately](https://github.com/schneems/get_process_mem/issues/7), so if you don't use the feature above it is recommended to use this feature or use a [log-drain-based dyno killer](https://github.com/arches/whacamole). You can enable rolling restarts by running:
 
 ```ruby
 # config/puma.rb
@@ -107,6 +133,11 @@ PumaWorkerKiller.config do |config|
   # PumaWorkerKiller: Consuming 54.34765625 mb with master and 2 workers.
 
   config.pre_term = -> (worker) { puts "Worker #{worker.inspect} being killed" }
+
+  # For Heroku log-runtime-metrics
+  config.heroku_api_token = ENV['API_TOKEN_HEROKU'] # required
+  config.heroku_app_name = ENV['APP_NAME_HEROKU'] # required
+  config.reaper_status_logs = !Rails.env.production? # recommended to avoid redundancy with log-runtime-metrics memory data.
 end
 PumaWorkerKiller.start
 ```
