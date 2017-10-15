@@ -61,4 +61,14 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
       assert_contains(spawn, "Rolling Restart")
     end
   end
+
+  def test_api_token
+    port     = 0 # http://stackoverflow.com/questions/200484/how-do-you-find-a-free-tcp-server-port-using-ruby
+    command  = "bundle exec puma #{ fixture_path.join("default.ru") } -t 1:1 -w 2 --preload --debug -p #{ port }"
+    options  = { wait_for: "booted", timeout: 15, env: { 'APP_NAME_HEROKU' => 'fake-app-name', 'API_TOKEN_HEROKU' => 'fake-api-token' } }
+
+    WaitForIt.new(command, options) do |spawn|
+      assert_contains(spawn, "Consuming 0.0 mb")
+    end
+  end
 end
