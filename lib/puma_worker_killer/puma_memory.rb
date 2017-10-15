@@ -55,7 +55,7 @@ module PumaWorkerKiller
       if PumaWorkerKiller.heroku_api_token
         heroku = HerokuWrapper.new(PumaWorkerKiller.heroku_app_name, PumaWorkerKiller.heroku_api_token)
         stream_url = heroku.create_log_session
-        Stream.new(stream_url).watch
+        Stream.new(stream_url).watch rescue 0.0
       else
         master_memory = GetProcessMem.new(Process.pid).mb
         worker_memory = workers.map {|_, mem| mem }.inject(&:+) || 0
