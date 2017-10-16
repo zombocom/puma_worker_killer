@@ -170,7 +170,7 @@ You may want to periodically restart all of your workers rather than simply kill
 PumaWorkerKiller.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
 ```
 
-By default PumaWorkerKiller will perform a rolling restart of all your worker processes every 12 hours. To disable, set to `false`.
+By default PumaWorkerKiller will perform a rolling restart of all your worker processes every 6 hours. To disable, set to `false`.
 
 You may want to hide the following log lines: `PumaWorkerKiller: Consuming 54.34765625 mb with master and 2 workers.`. To do that set:
 
