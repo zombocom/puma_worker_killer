@@ -51,6 +51,14 @@ or you can pass in the restart frequency:
 PumaWorkerKiller.enable_rolling_restart(12 * 3600) # 12 hours in seconds
 ```
 
+If you would like to introduce a custom delay between worker restarts:
+```ruby
+# Rolling restart every 12hrs, 120 second period between worker terminations.
+PumaWorkerKiller.enable_rolling_restart(12 * 3600, 120) 
+```
+This is useful if your workers have a `on_worker_shutdown` routine that takes some
+period of time. The default is 60 seconds to avoid all workers being shut down at once.
+
 Make sure if you do this to not accidentally call `PumaWorkerKiller.start` as well.
 
 ## Enable Worker Killing
