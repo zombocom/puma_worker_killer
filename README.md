@@ -1,6 +1,7 @@
 # Puma Worker Killer
 
 [![Build Status](https://travis-ci.org/schneems/puma_worker_killer.png?branch=master)](https://travis-ci.org/schneems/puma_worker_killer)
+[![Help Contribute to Open Source](https://www.codetriage.com/schneems/puma_worker_killer/badges/users.svg)](https://www.codetriage.com/schneems/puma_worker_killer)
 
 
 ## What
