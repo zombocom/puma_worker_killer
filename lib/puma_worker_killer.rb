@@ -32,7 +32,7 @@ module PumaWorkerKiller
                              kill_delay = self.rolling_restart_kill_delay)
     # so all workers don't restart at the exact same time across multiple machines
     frequency = frequency + rand(0..10.0)
-    reaper    = RollingRestart.new(kill_delay: kill_delay)
+    reaper    = RollingRestart.new(kill_delay)
     AutoReap.new(frequency, reaper).start
   end
 end
