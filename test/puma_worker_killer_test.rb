@@ -61,4 +61,19 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
       assert_contains(spawn, "Rolling Restart")
     end
   end
+
+  def test_rolling_restart_worker_kill_check
+    file     = fixture_path.join("rolling_restart.ru")
+    port     = 0
+    command  = "bundle exec puma #{ file } -t 1:1 -w 1 --preload --debug -p #{ port }"
+    puts command.inspect
+    options  = { wait_for: "booted", timeout: 120, env: {} }
+
+    WaitForIt.new(command, options) do |spawn|
+      # at least 2 matches for TERM (so we set a timeout value longer - 120sec)
+      spawn.wait!(/TERM.*TERM/m)
+      term_ids = spawn.log.read.scan(/TERM to pid (\d*)/)
+      assert term_ids.sort == term_ids.uniq.sort
+    end
+  end
 end
