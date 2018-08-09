@@ -103,7 +103,7 @@ PumaWorkerKiller.config do |config|
   config.ram           = 1024 # mb
   config.frequency     = 5    # seconds
   config.percent_usage = 0.98
-  config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
+  config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds, or 12.hours if using Rails
   config.reaper_status_logs = true # setting this to false will not log lines like:
   # PumaWorkerKiller: Consuming 54.34765625 mb with master and 2 workers.
 
@@ -141,7 +141,7 @@ before_fork do
     config.ram           = 1024 # mb
     config.frequency     = 5    # seconds
     config.percent_usage = 0.98
-    config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
+    config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds, or 12.hours if using Rails
   end
   PumaWorkerKiller.start
 end
@@ -168,7 +168,7 @@ PumaWorkerKiller.frequency = 20 # seconds
 You may want to periodically restart all of your workers rather than simply killing your largest. To do that set:
 
 ```ruby
-PumaWorkerKiller.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
+PumaWorkerKiller.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds, or 12.hours if using Rails
 ```
 
 By default PumaWorkerKiller will perform a rolling restart of all your worker processes every 6 hours. To disable, set to `false`.
