@@ -41,7 +41,9 @@ $ heroku labs:enable log-runtime-metrics --app YOUR_APP_NAME
 Next, get your app's Heroku auth token:
 
 ```bash
-$ heroku auth:token
+$ heroku auth:token # for a one-year token
+# or...
+$ heroku authorizations:create # for a long-lived token
 ```
 
 Then, set these variables in your Heroku config.
