@@ -67,7 +67,7 @@ before_fork do
 end
 ```
 
-That's it. Now on a regular basis the size of all Puma and all of it's forked processes will be evaluated and if they're over the RAM threshold will be killed. Don't worry Puma will notice a process is missing a spawn a fresh copy with a much smaller RAM footprint ASAP.
+That's it. Now on a regular basis the size of all Puma and all of it's forked processes will be evaluated and if they're over the RAM threshold will be killed. Don't worry Puma will notice a process is missing and spawn a fresh copy with a much smaller RAM footprint ASAP.
 
 ## Troubleshooting
 
