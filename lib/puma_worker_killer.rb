@@ -16,6 +16,7 @@ module PumaWorkerKiller
   end
 
   def reaper(ram = self.ram, percent = self.percent_usage, reaper_status_logs = self.reaper_status_logs, pre_term = self.pre_term)
+    ram = ram.to_i # convert if reading from env variable
     Reaper.new(ram * percent_usage, nil, reaper_status_logs, pre_term)
   end
 
