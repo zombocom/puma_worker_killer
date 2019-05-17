@@ -3,20 +3,21 @@ require 'get_process_mem'
 module PumaWorkerKiller
   extend self
 
-  attr_accessor :ram, :frequency, :percent_usage, :rolling_restart_frequency, :reaper_status_logs, :pre_term
+  attr_accessor :ram, :frequency, :percent_usage, :rolling_restart_frequency, :reaper_status_logs, :pre_term, :on_calculation
   self.ram           = 512  # mb
   self.frequency     = 10   # seconds
   self.percent_usage = 0.99 # percent of RAM to use
   self.rolling_restart_frequency = 6 * 3600 # 6 hours in seconds
   self.reaper_status_logs = true
-  self.pre_term = lambda { |_| } # nop
+  self.pre_term = nil
+  self.on_calculation = nil
 
   def config
     yield self
   end
 
-  def reaper(ram = self.ram, percent = self.percent_usage, reaper_status_logs = self.reaper_status_logs, pre_term = self.pre_term)
-    Reaper.new(ram * percent_usage, nil, reaper_status_logs, pre_term)
+  def reaper(ram = self.ram, percent = self.percent_usage, reaper_status_logs = self.reaper_status_logs, pre_term = self.pre_term, on_calculation = self.on_calculation)
+    Reaper.new(ram * percent_usage, nil, reaper_status_logs, pre_term, on_calculation)
   end
 
   def start(frequency = self.frequency, reaper = self.reaper)
