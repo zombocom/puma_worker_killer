@@ -95,7 +95,7 @@ before_fork do
 end
 ```
 
-That's it. Now on a regular basis the size of all Puma and all of it's forked processes will be evaluated and if they're over the RAM threshold will be killed. Don't worry Puma will notice a process is missing a spawn a fresh copy with a much smaller RAM footprint ASAP.
+That's it. Now on a regular basis the size of all Puma and all of it's forked processes will be evaluated and if they're over the RAM threshold will be killed. Don't worry Puma will notice a process is missing and spawn a fresh copy with a much smaller RAM footprint ASAP.
 
 ## Troubleshooting
 
@@ -131,7 +131,7 @@ PumaWorkerKiller.config do |config|
   config.ram           = 1024 # mb
   config.frequency     = 5    # seconds
   config.percent_usage = 0.98
-  config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
+  config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds, or 12.hours if using Rails
   config.reaper_status_logs = true # setting this to false will not log lines like:
   # PumaWorkerKiller: Consuming 54.34765625 mb with master and 2 workers.
 
@@ -163,6 +163,12 @@ PumaWorkerKiller: Rolling Restart. 5 workers consuming total: 650mb mb. Sending 
 
 However you may want to collect more data, such as sending an event to an error collection service like rollbar or airbrake. The `pre_term` lambda gets called before any worker is killed by PWK for any reason.
 
+### on_calculation
+
+`config.on_calculation` will be called every time Puma Worker Killer calculates memory usage (`config.frequency`). This may be useful for monitoring your total puma application memory usage, which can be contrasted with other application monitoring solutions.
+
+This callback lambda is given a single value for the amount of memory used.
+
 ## Attention
 
 If you start puma as a daemon, to add puma worker killer config into puma config file, rather than into initializers:
@@ -174,7 +180,7 @@ before_fork do
     config.ram           = 1024 # mb
     config.frequency     = 5    # seconds
     config.percent_usage = 0.98
-    config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
+    config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds, or 12.hours if using Rails
   end
   PumaWorkerKiller.start
 end
@@ -201,7 +207,7 @@ PumaWorkerKiller.frequency = 20 # seconds
 You may want to periodically restart all of your workers rather than simply killing your largest. To do that set:
 
 ```ruby
-PumaWorkerKiller.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
+PumaWorkerKiller.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds, or 12.hours if using Rails
 ```
 
 By default PumaWorkerKiller will perform a rolling restart of all your worker processes every 6 hours. To disable, set to `false`.

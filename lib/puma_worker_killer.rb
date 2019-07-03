@@ -3,13 +3,14 @@ require 'get_process_mem'
 module PumaWorkerKiller
   extend self
 
-  attr_accessor :ram, :frequency, :percent_usage, :rolling_restart_frequency, :reaper_status_logs, :pre_term, :heroku_api_token, :heroku_app_name
+  attr_accessor :ram, :frequency, :percent_usage, :rolling_restart_frequency, :reaper_status_logs, :pre_term, :on_calculation, :heroku_api_token, :heroku_app_name
   self.ram           = 512  # mb
   self.frequency     = 10   # seconds
   self.percent_usage = 0.99 # percent of RAM to use
   self.rolling_restart_frequency = 6 * 3600 # 6 hours in seconds
   self.reaper_status_logs = true
-  self.pre_term = lambda { |_| } # nop
+  self.pre_term = nil
+  self.on_calculation = nil
   self.heroku_api_token = nil
   self.heroku_app_name = nil
 
@@ -17,8 +18,8 @@ module PumaWorkerKiller
     yield self
   end
 
-  def reaper(ram = self.ram, percent = self.percent_usage, reaper_status_logs = self.reaper_status_logs, pre_term = self.pre_term)
-    Reaper.new(ram * percent_usage, nil, reaper_status_logs, pre_term)
+  def reaper(ram = self.ram, percent = self.percent_usage, reaper_status_logs = self.reaper_status_logs, pre_term = self.pre_term, on_calculation = self.on_calculation)
+    Reaper.new(ram * percent_usage, nil, reaper_status_logs, pre_term, on_calculation)
   end
 
   def start(frequency = self.frequency, reaper = self.reaper)
