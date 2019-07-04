@@ -16,6 +16,5 @@ module PumaWorkerKiller
         end
       end
     end
-
   end
 end
