@@ -2,6 +2,7 @@ module PumaWorkerKiller
   class PumaMemory
     def initialize(master = nil)
       @master  = master || get_master
+      @workers = nil
     end
 
     def master
