@@ -1,5 +1,6 @@
 ## Master
 
+- Add option to adjust restart randomizer (#78)
 - Simplify workers memory calculation in PumaMemory‘s `get_total` method #81
 - Add rubocop in gemspec and CI, with offenses corrected and unnecessary cops disabled.
 - Add `pre_term`-like `rolling_pre_term` config for terminations caused by rolling restart (#86)
