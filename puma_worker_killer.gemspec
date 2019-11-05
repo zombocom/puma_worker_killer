@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency "puma",              ">= 2.7", "< 4"
+  gem.add_dependency "puma",              ">= 2.7", "< 5"
   gem.add_dependency "get_process_mem",   "~>  0.2"
   gem.add_development_dependency "rack", "~> 1.6"
   gem.add_development_dependency "wait_for_it", "~> 0.1"
