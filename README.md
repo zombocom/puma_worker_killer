@@ -3,6 +3,22 @@
 [![Build Status](https://travis-ci.org/schneems/puma_worker_killer.png?branch=master)](https://travis-ci.org/schneems/puma_worker_killer)
 [![Help Contribute to Open Source](https://www.codetriage.com/schneems/puma_worker_killer/badges/users.svg)](https://www.codetriage.com/schneems/puma_worker_killer)
 
+## !!!!!!!!!!!!!!!! STOP !!!!!!!!!!!!!!!!
+
+Before you use this gem, know that it is dangerous. If you have a memory issue, you need to fix the issue. The original idea behind this gem is that it would act as a temporary band-aid to buy you time to allow you to fix your issues. If you turn this on and don't fix the underlying memory problems, then things will only get worse over time.
+
+This gem can also make your performance WORSE. When a worker is killed, and comes back it takes CPU cycles and time. If you are frequently restarting your workers then you're killing your performance.
+
+Here are some places to start improving your understanding of memory behvior in Ruby:
+
+- [Complete Guide to Rails Performance (Book)](https://www.railsspeed.com)
+- [How Ruby uses Memory](https://www.sitepoint.com/ruby-uses-memory/)
+- [Ruby Memory Use (Heroku Devcenter article I maintain)](https://devcenter.heroku.com/articles/ruby-memory-use)
+- [Jumping off the Ruby Memory Cliff](https://www.schneems.com/2017/04/12/jumping-off-the-memory-cliff/)
+- [How Ruby uses memory (Talk)](https://www.schneems.com/2015/05/11/how-ruby-uses-memory.html) (you can skip the first story in the video, the rest are about memory)
+- [Debugging a memory leak on Heroku](https://blog.codeship.com/debugging-a-memory-leak-on-heroku/)
+
+If you still need this gem, proceed with caution.
 
 ## What
 
@@ -30,7 +46,7 @@ Then run `$ bundle install`
 
 -->
 
-## Turn on Rolling Restarts
+## Turn on Rolling Restarts - Heroku Mode
 
 A rolling restart will kill each of your workers on a rolling basis. You set the frequency which it conducts the restart. This is a simple way to keep memory down as Ruby web programs generally increase memory usage over time. If you're using Heroku [it is difficult to measure RAM from inside of a container accurately](https://github.com/schneems/get_process_mem/issues/7), so it is recommended to use this feature or use a [log-drain-based worker killer](https://github.com/arches/whacamole). You can enable roling restarts by running:
 
@@ -55,7 +71,7 @@ Make sure if you do this to not accidentally call `PumaWorkerKiller.start` as we
 
 ## Enable Worker Killing
 
-If you're not running on a containerized platform you can try to detect the amount of memory you're using and only kill Puma workers when you're over that limit. It may allow you to go for longer periods of time without killing a worker however it is more error prone than rolling restarts. To enable measurement based worker killing put this in your `config/puma.rb`:
+If you're not running on a containerized platform (like Heroku or Docker) you can try to detect the amount of memory you're using and only kill Puma workers when you're over that limit. It may allow you to go for longer periods of time without killing a worker however it is more error prone than rolling restarts. To enable measurement based worker killing put this in your `config/puma.rb`:
 
 ```ruby
 # config/puma.rb
