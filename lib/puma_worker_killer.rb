@@ -3,7 +3,7 @@ require 'get_process_mem'
 module PumaWorkerKiller
   extend self
 
-  attr_accessor :ram, :frequency, :percent_usage, :rolling_restart_frequency, :reaper_status_logs, :pre_term, :on_calculation
+  attr_accessor :ram, :frequency, :percent_usage, :rolling_restart_frequency, :reaper_status_logs, :pre_term, :on_calculation, :requests_count
   self.ram           = 512  # mb
   self.frequency     = 10   # seconds
   self.percent_usage = 0.99 # percent of RAM to use
@@ -11,6 +11,7 @@ module PumaWorkerKiller
   self.reaper_status_logs = true
   self.pre_term = nil
   self.on_calculation = nil
+  self.requests_count = 10000
 
   def config
     yield self
@@ -29,6 +30,10 @@ module PumaWorkerKiller
     frequency = frequency + rand(0..10.0) # so all workers don't restart at the exact same time across multiple machines
     AutoReap.new(frequency, RollingRestart.new).start
   end
+
+  def restart_after_requests_count(requests_count = self.requests_count, frequency = self.frequency)
+    AutoReap.new(frequency, RequestsCountReaper.new(requests_count)).start
+  end
 end
 
 require 'puma_worker_killer/puma_memory'
@@ -36,3 +41,5 @@ require 'puma_worker_killer/reaper'
 require 'puma_worker_killer/rolling_restart'
 require 'puma_worker_killer/auto_reap'
 require 'puma_worker_killer/version'
+require 'puma_worker_killer/requests_count_reaper'
+require 'puma_worker_killer/puma_requests_count'
