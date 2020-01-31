@@ -1,3 +1,7 @@
+## Master
+
+- Simplify workers memory calculation in PumaMemory‘s `get_total` method #81
+
 ## 0.1.1
 
 - Allow PWK to be used with Puma 4 (#72)
