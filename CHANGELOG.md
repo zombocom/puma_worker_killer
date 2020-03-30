@@ -1,4 +1,6 @@
-## Master
+## Main
+
+- Test on recent ruby versions #84
 
 ## 0.2.0
 
