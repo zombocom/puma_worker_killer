@@ -16,7 +16,7 @@ module PumaWorkerKiller
     yield self
   end
 
-  def reaper(ram = self.ram, percent = self.percent_usage, reaper_status_logs = self.reaper_status_logs, pre_term = self.pre_term, on_calculation = self.on_calculation)
+  def reaper(ram = self.ram, percent_usage = self.percent_usage, reaper_status_logs = self.reaper_status_logs, pre_term = self.pre_term, on_calculation = self.on_calculation)
     Reaper.new(ram * percent_usage, nil, reaper_status_logs, pre_term, on_calculation)
   end
 

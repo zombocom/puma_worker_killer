@@ -14,7 +14,7 @@ module PumaWorkerKiller
       total_memory = get_total_memory
       return false unless @cluster.running?
 
-      @cluster.workers.each do |worker, ram|
+      @cluster.workers.each do |worker, _ram|
         @cluster.master.log "PumaWorkerKiller: Rolling Restart. #{@cluster.workers.count} workers consuming total: #{total_memory} mb. Sending TERM to pid #{worker.pid}."
         worker.term
         sleep wait_between_worker_kill

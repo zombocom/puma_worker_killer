@@ -7,26 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'lib/puma_worker_killer/rolling_restart.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'lib/puma_worker_killer.rb'
-    - 'test/fixtures/fixture_helper.rb'
-
-# Offense count: 1
-Lint/UselessAssignment:
-  Exclude:
-    - 'Rakefile'
-
-# Offense count: 1
 # Configuration parameters: IgnoredMethods.
 Metrics/AbcSize:
   Max: 21
