@@ -15,6 +15,7 @@ module PumaWorkerKiller
 
     def reap
       return false if @cluster.workers_stopped?
+
       total = get_total_memory
       @on_calculation.call(total) unless @on_calculation.nil?
 

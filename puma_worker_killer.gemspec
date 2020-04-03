@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'puma_worker_killer/version'
@@ -24,5 +25,4 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rake",  "~> 10.1"
   gem.add_development_dependency "test-unit",  ">= 0"
   gem.add_development_dependency "wait_for_it", "~> 0.1"
-
 end

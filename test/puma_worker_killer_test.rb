@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class PumaWorkerKillerTest < Test::Unit::TestCase
-
   def test_starts
     port     = 0 # http://stackoverflow.com/questions/200484/how-do-you-find-a-free-tcp-server-port-using-ruby
     command  = "bundle exec puma #{ fixture_path.join("default.ru") } -t 1:1 -w 2 --preload --debug -p #{ port }"
@@ -62,7 +61,6 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
   end
 
   def test_rolling_restart
-
     file     = fixture_path.join("rolling_restart.ru")
     port     = 0
     command  = "bundle exec puma #{ file } -t 1:1 -w 2 --preload --debug -p #{ port }"
