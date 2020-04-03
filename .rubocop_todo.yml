@@ -40,13 +40,6 @@ Style/MutableConstant:
   Exclude:
     - 'lib/puma_worker_killer/version.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'puma_worker_killer.gemspec'
-
 # Offense count: 32
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
