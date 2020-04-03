@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = 'https://github.com/schneems/puma_worker_killer'
   gem.license       = 'MIT'
 
-  gem.files         = `git ls-files`.split($/)
+  gem.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
