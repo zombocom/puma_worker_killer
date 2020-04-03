@@ -10,7 +10,7 @@ PumaWorkerKiller.config do |config|
   config.frequency = Integer(ENV['PUMA_FREQUENCY']) if ENV['PUMA_FREQUENCY']
 end
 
-puts "Frequency: #{ PumaWorkerKiller.frequency }" if ENV['PUMA_FREQUENCY']
+puts "Frequency: #{PumaWorkerKiller.frequency}" if ENV['PUMA_FREQUENCY']
 
 class HelloWorld
   def response(env)
