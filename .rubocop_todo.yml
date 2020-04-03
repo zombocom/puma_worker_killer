@@ -16,12 +16,6 @@ Gemspec/OrderedDependencies:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Layout/CommentIndentation:
-  Exclude:
-    - 'lib/puma_worker_killer/puma_memory.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 Layout/EmptyLineAfterGuardClause:
   Exclude:
     - 'lib/puma_worker_killer/reaper.rb'
