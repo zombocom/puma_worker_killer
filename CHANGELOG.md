@@ -1,6 +1,7 @@
 ## Master
 
 - Simplify workers memory calculation in PumaMemory‘s `get_total` method #81
+- Add rubocop in gemspec and CI, with offenses corrected and unnecessary cops disabled.
 
 ## 0.1.1
 
@@ -29,3 +30,4 @@
 ## 0.0.3
 
 - Fix memory metrics in on linux
+

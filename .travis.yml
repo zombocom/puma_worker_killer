@@ -13,3 +13,10 @@ matrix:
   allow_failures:
     - rvm: ruby-head
     - rvm: rbx
+
+install:
+  - bundle install
+
+script:
+  - bundle exec rubocop
+  - bundle exec rake test
