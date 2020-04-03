@@ -28,7 +28,7 @@ module PumaWorkerKiller
   end
 
   def enable_rolling_restart(frequency = rolling_restart_frequency)
-    frequency = frequency + rand(0..10.0) # so all workers don't restart at the exact same time across multiple machines
+    frequency += rand(0..10.0) # so all workers don't restart at the exact same time across multiple machines
     AutoReap.new(frequency, RollingRestart.new).start
   end
 end

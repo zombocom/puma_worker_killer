@@ -89,12 +89,6 @@ Style/SafeNavigation:
   Exclude:
     - 'lib/puma_worker_killer/reaper.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/SelfAssignment:
-  Exclude:
-    - 'lib/puma_worker_killer.rb'
-
 # Offense count: 32
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
