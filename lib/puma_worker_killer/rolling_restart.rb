@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PumaWorkerKiller
   class RollingRestart
     def initialize(master = nil)

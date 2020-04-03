@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PumaWorkerKiller
   class PumaMemory
     def initialize(master = nil)

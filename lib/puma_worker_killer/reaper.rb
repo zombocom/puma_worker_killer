@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PumaWorkerKiller
   class Reaper
     def initialize(max_ram, master = nil, reaper_status_logs = true, pre_term = nil, on_calculation = nil)

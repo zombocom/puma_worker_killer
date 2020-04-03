@@ -67,13 +67,6 @@ Style/ExpandPathArguments:
     - 'test/fixtures/rolling_restart.ru'
     - 'test/test_helper.rb'
 
-# Offense count: 18
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, always_true, never
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
