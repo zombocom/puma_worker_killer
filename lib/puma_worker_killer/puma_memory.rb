@@ -57,7 +57,7 @@ module PumaWorkerKiller
       worker_memory = workers.values.sum
       worker_memory + master_memory
     end
-    alias :get_total_memory :get_total
+    alias get_total_memory get_total
 
     def workers
       @workers || set_workers

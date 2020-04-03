@@ -24,14 +24,6 @@ Naming/AccessorMethodName:
     - 'lib/puma_worker_killer/rolling_restart.rb'
 
 # Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: prefer_alias, prefer_alias_method
-Style/Alias:
-  Exclude:
-    - 'lib/puma_worker_killer/puma_memory.rb'
-
-# Offense count: 1
 Style/CommentedKeyword:
   Exclude:
     - 'lib/puma_worker_killer/rolling_restart.rb'
