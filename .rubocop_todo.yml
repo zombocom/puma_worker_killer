@@ -16,31 +16,6 @@ Metrics/AbcSize:
 Metrics/MethodLength:
   Max: 11
 
-# Offense count: 3
-Naming/AccessorMethodName:
-  Exclude:
-    - 'lib/puma_worker_killer/puma_memory.rb'
-    - 'lib/puma_worker_killer/reaper.rb'
-    - 'lib/puma_worker_killer/rolling_restart.rb'
-
-# Offense count: 5
-Style/Documentation:
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
-    - 'lib/puma_worker_killer.rb'
-    - 'lib/puma_worker_killer/auto_reap.rb'
-    - 'lib/puma_worker_killer/puma_memory.rb'
-    - 'lib/puma_worker_killer/reaper.rb'
-    - 'lib/puma_worker_killer/rolling_restart.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/Encoding:
-  Exclude:
-    - 'Rakefile'
-    - 'puma_worker_killer.gemspec'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
