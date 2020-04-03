@@ -32,7 +32,7 @@ module PumaWorkerKiller
     end
 
     def smallest_worker
-      smallest, _ = workers.to_a.first
+      smallest, = workers.to_a.first
       smallest
     end
 
@@ -42,7 +42,7 @@ module PumaWorkerKiller
     end
 
     def largest_worker
-      largest_worker, _ = workers.to_a.last
+      largest_worker, = workers.to_a.last
       largest_worker
     end
 
