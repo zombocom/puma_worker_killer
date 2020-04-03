@@ -19,7 +19,7 @@ module PumaWorkerKiller
       return false if @cluster.workers_stopped?
 
       total = get_total_memory
-      @on_calculation.call(total) unless @on_calculation.nil?
+      @on_calculation&.call(total)
 
       if total > @max_ram
         @cluster.master.log "PumaWorkerKiller: Out of memory. #{@cluster.workers.count} workers consuming total: #{total} mb out of max: #{@max_ram} mb. Sending TERM to pid #{@cluster.largest_worker.pid} consuming #{@cluster.largest_worker_memory} mb."
@@ -32,7 +32,7 @@ module PumaWorkerKiller
         #   A new request comes in, Worker B takes it, and consumes 101 mb memory
         #   term_largest_worker (previously here) gets called and terms Worker B (thus not passing the about-to-be-terminated worker to `@pre_term`)
         largest_worker = @cluster.largest_worker
-        @pre_term.call(largest_worker) unless @pre_term.nil?
+        @pre_term&.call(largest_worker)
         @cluster.term_worker(largest_worker)
 
       elsif @reaper_status_logs

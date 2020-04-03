@@ -81,14 +81,6 @@ Style/PercentLiteralDelimiters:
   Exclude:
     - 'puma_worker_killer.gemspec'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods.
-# AllowedMethods: present?, blank?, presence, try, try!
-Style/SafeNavigation:
-  Exclude:
-    - 'lib/puma_worker_killer/reaper.rb'
-
 # Offense count: 32
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
