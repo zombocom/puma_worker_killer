@@ -7,9 +7,7 @@ module PumaWorkerKiller
       @workers = nil
     end
 
-    def master
-      @master
-    end
+    attr_reader :master
 
     def size
       workers.size
