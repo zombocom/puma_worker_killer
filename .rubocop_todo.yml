@@ -83,18 +83,6 @@ Style/PercentLiteralDelimiters:
 
 # Offense count: 2
 # Cop supports --auto-correct.
-Style/RedundantPercentQ:
-  Exclude:
-    - 'puma_worker_killer.gemspec'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/RedundantSelf:
-  Exclude:
-    - 'lib/puma_worker_killer.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
 # Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods.
 # AllowedMethods: present?, blank?, presence, try, try!
 Style/SafeNavigation:
