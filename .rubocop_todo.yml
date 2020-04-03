@@ -23,11 +23,6 @@ Naming/AccessorMethodName:
     - 'lib/puma_worker_killer/reaper.rb'
     - 'lib/puma_worker_killer/rolling_restart.rb'
 
-# Offense count: 1
-Style/CommentedKeyword:
-  Exclude:
-    - 'lib/puma_worker_killer/rolling_restart.rb'
-
 # Offense count: 5
 Style/Documentation:
   Exclude:

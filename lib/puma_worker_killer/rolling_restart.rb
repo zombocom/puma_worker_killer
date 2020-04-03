@@ -11,7 +11,7 @@ module PumaWorkerKiller
       @cluster.get_total_memory
     end
 
-    def reap(wait_between_worker_kill = 60) # seconds
+    def reap(seconds_between_worker_kill = 60)
       # this will implicitly call set_workers
       total_memory = get_total_memory
       return false unless @cluster.running?
@@ -19,7 +19,7 @@ module PumaWorkerKiller
       @cluster.workers.each do |worker, _ram|
         @cluster.master.log "PumaWorkerKiller: Rolling Restart. #{@cluster.workers.count} workers consuming total: #{total_memory} mb. Sending TERM to pid #{worker.pid}."
         worker.term
-        sleep wait_between_worker_kill
+        sleep seconds_between_worker_kill
       end
     end
   end
