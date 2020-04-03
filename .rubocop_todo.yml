@@ -128,33 +128,6 @@ Style/SpecialGlobalVars:
   Exclude:
     - 'puma_worker_killer.gemspec'
 
-# Offense count: 54
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'Gemfile'
-    - 'lib/puma_worker_killer/puma_memory.rb'
-    - 'lib/puma_worker_killer/version.rb'
-    - 'puma_worker_killer.gemspec'
-    - 'test/fixtures/big.ru'
-    - 'test/fixtures/config/puma_worker_killer_start.rb'
-    - 'test/fixtures/default.ru'
-    - 'test/fixtures/on_calculation.ru'
-    - 'test/fixtures/pre_term.ru'
-    - 'test/fixtures/rolling_restart.ru'
-    - 'test/puma_worker_killer_test.rb'
-    - 'test/test_helper.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiteralsInInterpolation:
-  Exclude:
-    - 'test/puma_worker_killer_test.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: AllowNamedUnderscoreVariables.
