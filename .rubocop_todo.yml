@@ -24,15 +24,6 @@ Style/HashSyntax:
   Exclude:
     - 'Rakefile'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: line_count_dependent, lambda, literal
-Style/Lambda:
-  Exclude:
-    - 'test/fixtures/on_calculation.ru'
-    - 'test/fixtures/pre_term.ru'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, Autocorrect.
