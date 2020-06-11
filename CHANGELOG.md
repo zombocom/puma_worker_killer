@@ -1,6 +1,7 @@
 ## Master
 
 - Simplify workers memory calculation in PumaMemory‘s `get_total` method #81
+- Add `pre_term`-like `rolling_pre_term` config for terminations caused by rolling restart #83
 
 ## 0.1.1
 
