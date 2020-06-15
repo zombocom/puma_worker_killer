@@ -1,6 +1,7 @@
 ## Master
 
 - Simplify workers memory calculation in PumaMemory‘s `get_total` method #81
+- Fix compatibility with ruby version 2.3.X (#87)
 
 ## 0.1.1
 
