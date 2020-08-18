@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PumaWorkerKiller
   class AutoReap
     def initialize(timeout, reaper = Reaper.new)

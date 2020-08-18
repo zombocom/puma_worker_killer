@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 
 require 'rack'
@@ -10,10 +12,10 @@ PumaWorkerKiller.config do |config|
   config.frequency = Integer(ENV['PUMA_FREQUENCY']) if ENV['PUMA_FREQUENCY']
 end
 
-puts "Frequency: #{ PumaWorkerKiller.frequency }" if ENV['PUMA_FREQUENCY']
+puts "Frequency: #{PumaWorkerKiller.frequency}" if ENV['PUMA_FREQUENCY']
 
 class HelloWorld
-  def response(env)
+  def response(_env)
     [200, {}, ['Hello World']]
   end
 end

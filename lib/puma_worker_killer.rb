@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'get_process_mem'
 
 module PumaWorkerKiller
@@ -19,7 +21,7 @@ module PumaWorkerKiller
     yield self
   end
 
-  def reaper(ram = self.ram, percent = self.percent_usage, reaper_status_logs = self.reaper_status_logs, pre_term = self.pre_term, on_calculation = self.on_calculation)
+  def reaper(ram = self.ram, percent_usage = self.percent_usage, reaper_status_logs = self.reaper_status_logs, pre_term = self.pre_term, on_calculation = self.on_calculation)
     Reaper.new(ram * percent_usage, nil, reaper_status_logs, pre_term, on_calculation)
   end
 
@@ -28,9 +30,9 @@ module PumaWorkerKiller
     enable_rolling_restart(rolling_restart_frequency) if rolling_restart_frequency
   end
 
-  def enable_rolling_restart(frequency = self.rolling_restart_frequency)
-    frequency = frequency + rand(0..10.0) # so all workers don't restart at the exact same time across multiple machines
-    AutoReap.new(frequency, RollingRestart.new(nil, self.rolling_pre_term)).start
+  def enable_rolling_restart(frequency = rolling_restart_frequency)
+    frequency += rand(0..10.0) # so all workers don't restart at the exact same time across multiple machines
+    AutoReap.new(frequency, RollingRestart.new(nil, rolling_pre_term)).start
   end
 end
 

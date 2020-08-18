@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# frozen_string_literal: true
 
 require 'bundler/gem_tasks'
 
@@ -7,7 +7,7 @@ require 'rake/testtask'
 
 task :default => [:test]
 
-test_task = Rake::TestTask.new(:test) do |t|
+Rake::TestTask.new(:test) do |t|
   t.libs << 'lib'
   t.libs << 'test'
   t.pattern = 'test/**/*_test.rb'
