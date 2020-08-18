@@ -90,15 +90,15 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
   end
 
   def test_rolling_pre_term
-    file     = fixture_path.join("rolling_pre_term.ru")
+    file     = fixture_path.join('rolling_pre_term.ru')
     port     = 0
-    command  = "bundle exec puma #{ file } -t 1:1 -w 2 --preload --debug -p #{ port }"
+    command  = "bundle exec puma #{file} -t 1:1 -w 2 --preload --debug -p #{port}"
     puts command.inspect
-    options  = { wait_for: "booted", timeout: 15, env: { } }
+    options = { wait_for: 'booted', timeout: 15, env: {} }
 
     WaitForIt.new(command, options) do |spawn|
-      assert_contains(spawn, "Rolling Restart")
-      assert_contains(spawn, "About to terminate (rolling) worker:") # defined in rolling_pre_term.ru
+      assert_contains(spawn, 'Rolling Restart')
+      assert_contains(spawn, 'About to terminate (rolling) worker:') # defined in rolling_pre_term.ru
     end
   end
 end

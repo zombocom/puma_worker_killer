@@ -8,12 +8,15 @@ Style/Documentation:
 
 Style/HashSyntax:
   Enabled: false
-  
+
 Style/ModuleFunction:
   Enabled: false
-  
+
 Style/StringLiterals:
   EnforcedStyle: single_quotes
 
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false

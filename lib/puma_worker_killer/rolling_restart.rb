@@ -19,7 +19,7 @@ module PumaWorkerKiller
 
       @cluster.workers.each do |worker, _ram|
         @cluster.master.log "PumaWorkerKiller: Rolling Restart. #{@cluster.workers.count} workers consuming total: #{total_memory} mb. Sending TERM to pid #{worker.pid}."
-        @rolling_pre_term.call(worker) unless @rolling_pre_term.nil?
+        @rolling_pre_term&.call(worker)
 
         worker.term
         sleep seconds_between_worker_kill
