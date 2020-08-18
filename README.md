@@ -117,6 +117,7 @@ PumaWorkerKiller.config do |config|
   # PumaWorkerKiller: Consuming 54.34765625 mb with master and 2 workers.
 
   config.pre_term = -> (worker) { puts "Worker #{worker.inspect} being killed" }
+  config.rolling_pre_term = -> (worker) { puts "Worker #{worker.inspect} being killed by rolling restart" }
 end
 PumaWorkerKiller.start
 ```
@@ -138,6 +139,17 @@ PumaWorkerKiller: Rolling Restart. 5 workers consuming total: 650mb mb. Sending 
 ```
 
 However you may want to collect more data, such as sending an event to an error collection service like rollbar or airbrake. The `pre_term` lambda gets called before any worker is killed by PWK for any reason.
+
+### rolling_pre_term
+
+`config.rolling_pre_term` will be called just prior to worker termination by rolling restart when rolling restart is enabled.
+
+It is similar to `config.pre_term`.
+
+Difference:
+
+- `config.pre_term` is triggered only by terminations related with exceeding RAM
+- `config.rolling_pre_term` is triggered only by terminations caused by enabled rolling restart
 
 ### on_calculation
 
