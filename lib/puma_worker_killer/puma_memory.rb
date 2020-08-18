@@ -52,7 +52,7 @@ module PumaWorkerKiller
     # Will refresh @workers
     def get_total(workers = set_workers)
       master_memory = GetProcessMem.new(Process.pid).mb
-      worker_memory = workers.values.sum
+      worker_memory = workers.values.inject(:+) || 0
       worker_memory + master_memory
     end
     alias get_total_memory get_total
