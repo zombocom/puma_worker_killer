@@ -1,5 +1,7 @@
 ## Main
 
+- Relax puma dependency (#94)
+
 ## 0.3.0
 
 - Test on recent ruby versions #84
