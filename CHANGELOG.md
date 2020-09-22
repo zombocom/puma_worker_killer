@@ -1,5 +1,7 @@
 ## Main
 
+## 0.3.1
+
 - Relax puma dependency (#94)
 
 ## 0.3.0
