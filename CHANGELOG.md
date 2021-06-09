@@ -1,5 +1,9 @@
 ## Main
 
+## 0.3.2
+
+- Refine worker termination and rolling restart event logs
+
 ## 0.3.1
 
 - Relax puma dependency (#94)

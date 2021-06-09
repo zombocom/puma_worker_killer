@@ -22,7 +22,7 @@ module PumaWorkerKiller
       @on_calculation&.call(total)
 
       if total > @max_ram
-        @cluster.master.log "PumaWorkerKiller: Out of memory. #{@cluster.workers.count} workers consuming total: #{total} mb out of max: #{@max_ram} mb. Sending TERM to pid #{@cluster.largest_worker.pid} consuming #{@cluster.largest_worker_memory} mb."
+        @cluster.master.log "PumaWorkerKiller: Out of memory. #{@cluster.workers.count} workers and master consuming total: #{total} mb out of max: #{@max_ram} mb. Sending TERM to pid #{@cluster.largest_worker.pid} consuming #{@cluster.largest_worker_memory} mb."
 
         # Fetch the largest_worker so that both `@pre_term` and `term_worker` are called with the same worker
         # Avoids a race condition where:
