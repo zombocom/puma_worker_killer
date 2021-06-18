@@ -3,6 +3,7 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'puma_worker_killer/version'
+require 'english'
 
 Gem::Specification.new do |gem|
   gem.name          = 'puma_worker_killer'

@@ -29,10 +29,14 @@ module PumaWorkerKiller
           "#{@cluster.workers.map { |worker, mem| "worker_#{worker.pid}=#{mem}mb" } * " "}"
       end
 
-      return unless total > @max_ram
+      kill(total) if total > @max_ram
+    end
 
+    private
+
+    def kill(total_mem)
       @cluster.master.log "PumaWorkerKiller: Out of memory. #{@cluster.workers.count} " \
-        "workers and master consuming total: #{total} mb out of max: #{@max_ram} mb. " \
+        "workers and master consuming total: #{total_mem} mb out of max: #{@max_ram} mb. " \
         "Sending TERM to pid #{@cluster.largest_worker.pid} consuming #{@cluster.largest_worker_memory} mb."
 
       # Fetch the largest_worker so that both `@pre_term` and `term_worker` are called with the same worker
