@@ -129,13 +129,13 @@ PumaWorkerKiller.start
 By default Puma Worker Killer will emit a log when a worker is being killed
 
 ```
-PumaWorkerKiller: Out of memory. 5 workers consuming total: 500 mb out of max: 450 mb. Sending TERM to pid 23 consuming 53 mb.
+PumaWorkerKiller: Out of memory. 5 workers and master consuming total: 500 mb out of max: 450 mb. Sending TERM to pid 23 consuming 53 mb.
 ```
 
 or
 
 ```
-PumaWorkerKiller: Rolling Restart. 5 workers consuming total: 650mb mb. Sending TERM to pid 34.
+PumaWorkerKiller: Rolling Restart. 5 workers and master consuming total: 650mb mb. Sending TERM to pid 34.
 ```
 
 However you may want to collect more data, such as sending an event to an error collection service like rollbar or airbrake. The `pre_term` lambda gets called before any worker is killed by PWK for any reason.

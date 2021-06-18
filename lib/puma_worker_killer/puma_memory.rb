@@ -49,9 +49,9 @@ module PumaWorkerKiller
       largest_memory_used
     end
 
-    # Will refresh @workers
+    # Will refresh @workers and @master_memory
     def get_total(workers = set_workers)
-      master_memory = GetProcessMem.new(Process.pid).mb
+      master_memory = set_master_memory
       worker_memory = workers.values.inject(:+) || 0
       worker_memory + master_memory
     end
@@ -59,6 +59,10 @@ module PumaWorkerKiller
 
     def workers
       @workers || set_workers
+    end
+
+    def master_memory
+      @master_memory || set_master_memory
     end
 
     private
@@ -79,6 +83,10 @@ module PumaWorkerKiller
       else
         {}
       end
+    end
+
+    def set_master_memory
+      @master_memory = GetProcessMem.new(Process.pid).mb
     end
   end
 end

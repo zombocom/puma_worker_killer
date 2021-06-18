@@ -1,5 +1,7 @@
 ## Main
 
+- Parser friendly, more complete logs (#97)
+
 ## 0.3.1
 
 - Relax puma dependency (#94)
@@ -43,4 +45,3 @@
 ## 0.0.3
 
 - Fix memory metrics in on linux
-
