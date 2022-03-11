@@ -1,5 +1,7 @@
 ## Main
 
+- Migrate CI from Travis CI to GitHub Actions (#101)
+
 ## 0.3.1
 
 - Relax puma dependency (#94)
