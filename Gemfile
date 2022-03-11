@@ -4,4 +4,5 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'rubocop', require: false
+# This is the last version which supports Ruby 2.3
+gem 'rubocop', '~> 0.81.0', require: false
