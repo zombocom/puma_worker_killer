@@ -9,7 +9,7 @@ Before you use this gem, know that it is dangerous. If you have a memory issue, 
 
 This gem can also make your performance WORSE. When a worker is killed, and comes back it takes CPU cycles and time. If you are frequently restarting your workers then you're killing your performance.
 
-Here are some places to start improving your understanding of memory behvior in Ruby:
+Here are some places to start improving your understanding of memory behavior in Ruby:
 
 - [Complete Guide to Rails Performance (Book)](https://www.railsspeed.com)
 - [How Ruby uses Memory](https://www.sitepoint.com/ruby-uses-memory/)
@@ -41,7 +41,7 @@ Then run `$ bundle install`
 
 ## Turn on Rolling Restarts - Heroku Mode
 
-A rolling restart will kill each of your workers on a rolling basis. You set the frequency which it conducts the restart. This is a simple way to keep memory down as Ruby web programs generally increase memory usage over time. If you're using Heroku [it is difficult to measure RAM from inside of a container accurately](https://github.com/schneems/get_process_mem/issues/7), so it is recommended to use this feature or use a [log-drain-based worker killer](https://github.com/arches/whacamole). You can enable roling restarts by running:
+A rolling restart will kill each of your workers on a rolling basis. You set the frequency which it conducts the restart. This is a simple way to keep memory down as Ruby web programs generally increase memory usage over time. If you're using Heroku [it is difficult to measure RAM from inside of a container accurately](https://github.com/schneems/get_process_mem/issues/7), so it is recommended to use this feature or use a [log-drain-based worker killer](https://github.com/arches/whacamole). You can enable rolling restarts by running:
 
 ```ruby
 # config/puma.rb
