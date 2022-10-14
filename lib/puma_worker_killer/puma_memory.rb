@@ -71,7 +71,7 @@ module PumaWorkerKiller
     # sorted by memory ascending (smallest first, largest last)
     def set_workers
       workers = {}
-      @master.instance_variable_get('@workers').each do |worker|
+      Array(@master.instance_variable_get('@workers')).each do |worker|
         workers[worker] = GetProcessMem.new(worker.pid).mb
       end
       if workers.any?
