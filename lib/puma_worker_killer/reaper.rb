@@ -21,22 +21,27 @@ module PumaWorkerKiller
       total = get_total_memory
       @on_calculation&.call(total)
 
+      exceeded_memory = 0
+      to_kill = []
+      @cluster.workers.to_a.reverse_each do |item|
+        exceeded_memory += item[1]
+        to_kill << item
+        break if total - exceeded_memory < @max_ram
+      end
+
       if total > @max_ram
-        @cluster.master.log "PumaWorkerKiller: Out of memory. #{@cluster.workers.count} workers consuming total: #{total} mb out of max: #{@max_ram} mb. Sending TERM to pid #{@cluster.largest_worker.pid} consuming #{@cluster.largest_worker_memory} mb."
-
-        # Fetch the largest_worker so that both `@pre_term` and `term_worker` are called with the same worker
-        # Avoids a race condition where:
-        #   Worker A consume 100 mb memory
-        #   Worker B consume 99 mb memory
-        #   pre_term gets called with Worker A
-        #   A new request comes in, Worker B takes it, and consumes 101 mb memory
-        #   term_largest_worker (previously here) gets called and terms Worker B (thus not passing the about-to-be-terminated worker to `@pre_term`)
-        largest_worker = @cluster.largest_worker
-        @pre_term&.call(largest_worker)
-        @cluster.term_worker(largest_worker)
-
+        log_entry = "PumaWorkerKiller: Out of memory. #{@cluster.workers.count} workers consuming total: #{total} mb out of max: #{@max_ram} mb. " \
+          "Releasing #{exceeded_memory} mb from #{to_kill.length} workers."
+        to_kill.each do |item|
+          worker = item[0]
+          mem = item[1]
+          log_entry += "\r\n\tSending TERM to pid #{worker.pid} consuming #{mem} mb."
+          @pre_term&.call(worker)
+          @cluster.term_worker(worker)
+        end
+        @cluster.master.log(log_entry)
       elsif @reaper_status_logs
-        @cluster.master.log "PumaWorkerKiller: Consuming #{total} mb with master and #{@cluster.workers.count} workers."
+        @cluster.master.log("PumaWorkerKiller: Consuming #{total} mb with master and #{@cluster.workers.count} workers.")
       end
     end
   end
