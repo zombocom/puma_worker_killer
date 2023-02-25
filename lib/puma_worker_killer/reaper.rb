@@ -21,15 +21,15 @@ module PumaWorkerKiller
       total = get_total_memory
       @on_calculation&.call(total)
 
-      exceeded_memory = 0
-      to_kill = []
-      @cluster.workers.to_a.reverse_each do |item|
-        exceeded_memory += item[1]
-        to_kill << item
-        break if total - exceeded_memory < @max_ram
-      end
-
       if total > @max_ram
+        exceeded_memory = 0
+        to_kill = []
+        @cluster.workers.to_a.reverse_each do |item|
+          exceeded_memory += item[1]
+          to_kill << item
+          break if total - exceeded_memory < @max_ram
+        end
+
         log_entry = "PumaWorkerKiller: Out of memory. #{@cluster.workers.count} workers consuming total: #{total} mb out of max: #{@max_ram} mb. " \
           "Releasing #{exceeded_memory} mb from #{to_kill.length} workers."
         to_kill.each do |item|
