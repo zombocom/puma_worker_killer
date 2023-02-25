@@ -31,6 +31,7 @@ class PumaWorkerKillerTest < Test::Unit::TestCase
 
     WaitForIt.new(command, options) do |spawn|
       assert_contains(spawn, 'Out of memory')
+      assert_contains(spawn, /Releasing .* from 2 workers/)
     end
   end
 
