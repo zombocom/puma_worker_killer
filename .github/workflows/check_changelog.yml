@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Check that CHANGELOG is touched
       run: |
         cat $GITHUB_EVENT_PATH | jq .pull_request.title |  grep -i '\[\(\(changelog skip\)\|\(ci skip\)\)\]' ||  git diff remotes/origin/${{ github.base_ref }} --name-only | grep CHANGELOG.md
