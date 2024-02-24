@@ -1,6 +1,7 @@
 ## Main
 
 - Migrate CI from Travis CI to GitHub Actions (#101)
+- Update actions/checkout to v4 (#107)
 
 ## 0.3.1
 
