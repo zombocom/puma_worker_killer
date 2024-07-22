@@ -1,7 +1,7 @@
 # Puma Worker Killer
 
 [![CI](https://github.com/schneems/puma_worker_killer/actions/workflows/ci.yml/badge.svg)](https://github.com/schneems/puma_worker_killer/actions/workflows/ci.yml)
-[![Help Contribute to Open Source](https://www.codetriage.com/schneems/puma_worker_killer/badges/users.svg)](https://www.codetriage.com/schneems/puma_worker_killer)
+[![Help Contribute to Open Source](https://www.codetriage.com/zombocom/puma_worker_killer/badges/users.svg)](https://www.codetriage.com/zombocom/puma_worker_killer)
 
 ## !!!!!!!!!!!!!!!! STOP !!!!!!!!!!!!!!!!
 
