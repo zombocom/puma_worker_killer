@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'get_process_mem'
+require "get_process_mem"
 
 module PumaWorkerKiller
   extend self
 
   attr_accessor :ram, :frequency, :percent_usage, :rolling_restart_frequency,
-                :rolling_restart_splay_seconds,
-                :reaper_status_logs, :pre_term, :rolling_pre_term, :on_calculation
+    :rolling_restart_splay_seconds,
+    :reaper_status_logs, :pre_term, :rolling_pre_term, :on_calculation
 
-  self.ram           = 512  # mb
-  self.frequency     = 10   # seconds
+  self.ram = 512  # mb
+  self.frequency = 10   # seconds
   self.percent_usage = 0.99 # percent of RAM to use
   self.rolling_restart_frequency = 6 * 3600 # 6 hours in seconds
   self.rolling_restart_splay_seconds = 0.0..300.0 # 0 to 5 minutes in seconds
@@ -33,15 +33,15 @@ module PumaWorkerKiller
   end
 
   def enable_rolling_restart(frequency = rolling_restart_frequency,
-                             splay_seconds = rolling_restart_splay_seconds)
+    splay_seconds = rolling_restart_splay_seconds)
     # Randomize so all workers don't restart at the exact same time across multiple machines.
     frequency += rand(splay_seconds)
     AutoReap.new(frequency, RollingRestart.new(nil, rolling_pre_term)).start
   end
 end
 
-require 'puma_worker_killer/puma_memory'
-require 'puma_worker_killer/reaper'
-require 'puma_worker_killer/rolling_restart'
-require 'puma_worker_killer/auto_reap'
-require 'puma_worker_killer/version'
+require "puma_worker_killer/puma_memory"
+require "puma_worker_killer/reaper"
+require "puma_worker_killer/rolling_restart"
+require "puma_worker_killer/auto_reap"
+require "puma_worker_killer/version"

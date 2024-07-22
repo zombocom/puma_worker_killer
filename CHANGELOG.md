@@ -1,5 +1,7 @@
 ## Main
 
+- Add `bigdecimal` as a dependency (https://github.com/zombocom/puma_worker_killer/pull/109)
+- Ruby versions prior to 3.1 may no longer work (https://github.com/zombocom/puma_worker_killer/pull/109)
 - Migrate CI from Travis CI to GitHub Actions (#101)
 - Update actions/checkout to v4 (#107)
 
