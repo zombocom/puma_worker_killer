@@ -4,7 +4,7 @@ module PumaWorkerKiller
   class AutoReap
     def initialize(timeout, reaper = Reaper.new)
       @timeout = timeout # seconds
-      @reaper  = reaper
+      @reaper = reaper
       @running = false
     end
 

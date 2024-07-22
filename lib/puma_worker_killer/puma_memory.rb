@@ -3,7 +3,7 @@
 module PumaWorkerKiller
   class PumaMemory
     def initialize(master = nil)
-      @master  = master || get_master
+      @master = master || get_master
       @workers = nil
     end
 
@@ -55,7 +55,7 @@ module PumaWorkerKiller
       worker_memory = workers.values.inject(:+) || 0
       worker_memory + master_memory
     end
-    alias get_total_memory get_total
+    alias_method :get_total_memory, :get_total
 
     def workers
       @workers || set_workers
@@ -71,11 +71,11 @@ module PumaWorkerKiller
     # sorted by memory ascending (smallest first, largest last)
     def set_workers
       workers = {}
-      @master.instance_variable_get('@workers').each do |worker|
+      @master.instance_variable_get(:@workers).each do |worker|
         workers[worker] = GetProcessMem.new(worker.pid).mb
       end
       if workers.any?
-        @workers = Hash[workers.sort_by { |_, mem| mem }]
+        @workers = workers.sort_by { |_, mem| mem }.to_h
       else
         {}
       end
