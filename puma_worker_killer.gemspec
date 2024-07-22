@@ -23,7 +23,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'bigdecimal',        '>= 2.0'
   gem.add_dependency 'get_process_mem',   '>= 0.2'
 
-
   gem.add_development_dependency 'rack',        '>= 3.0'
   gem.add_development_dependency 'rake',        '>= 13.0'
   gem.add_development_dependency 'rackup',      '>= 2.1'

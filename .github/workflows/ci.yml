@@ -23,8 +23,8 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - name: rubocop
-        run: bundle exec rubocop
+      - name: Ruby linting
+        run: bundle exec standardrb
       - name: test
         run: bundle exec rake test
         continue-on-error: ${{ matrix.ruby == 'head' }}
