@@ -3,7 +3,7 @@
 require 'securerandom'
 
 require 'rack'
-require 'rack/server'
+require 'rackup/server'
 
 require 'puma_worker_killer'
 
